@@ -1,27 +1,27 @@
 'use client';
 
-import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
     let [passwordType, setPasswordType] = useState('password')
-    const { createSession, getSession, destroySession } = require("@/utils/session")
     const togglePassword = () => {
         setPasswordType(passwordType == 'password' ? 'text' : 'password')
     }
     const router = useRouter();
 
 
-    const onSubmit = async (event) => {
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
 
         const username = formData.get('username')
         const password = formData.get('password')
+        console.log(process.env.USERNAME_LOGIN);
+        
 
         if (username != process.env.USERNAME_LOGIN || password != process.env.PASSWORD_LOGIN) {
-            alert('Username atau password yang anda masukkan salah!')
+            alert('Username atau password yang anda masukkan salah!' + process.env.USERNAME_LOGIN + process.env.PASSWORD_LOGIN)
         } else {
             const expiryTime = Date.now() + 60 * 1000; 
             localStorage.setItem("user", JSON.stringify({ username, expiry: expiryTime }));
@@ -30,7 +30,7 @@ export default function Login() {
     }
 
     return (
-        <div className="div bg-gray-200 h-screen flex items-center justify-center">
+        <div className="bg-gray-200 h-screen flex items-center justify-center">
             <div className="bg-white rounded px-6 py-6 w-fit">
                 <div className="text-center">
                     <div className="bg-red-500 text-white text-sm py-6 px-4 w-fit mx-auto">

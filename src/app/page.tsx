@@ -1,16 +1,15 @@
 "use client"
 
-import { getUserSession } from "@/utils/session";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Popover } from 'flowbite';
+import { Popover, PopoverOptions } from 'flowbite';
 
 
 export default function Home() {
   const router = useRouter();
-  const [targetEl, setTarget] = useState();
-  const [triggerEl, setTrigger] = useState();
+  const [targetEl, setTarget] = useState<HTMLElement | null>(null);
+  const [triggerEl, setTrigger] = useState<HTMLElement | null>(null);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -61,8 +60,8 @@ export default function Home() {
 
 
   // Opsi default popover
-  const options = {
-    placement: 'top',
+  const options: PopoverOptions = {
+    placement: "top-start",
     triggerType: 'hover',
     offset: 10,
     onHide: () => {
